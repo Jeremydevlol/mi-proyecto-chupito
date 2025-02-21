@@ -1,111 +1,73 @@
 import React, { useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-// Importamos la librería para generar códigos QR
 import QRCode from "qrcode.react";
 
 const ShotClaimPage = () => {
-  // Estado para el restaurante seleccionado
-  const [selectedRestaurant, setSelectedRestaurant] = useState("rest1");
-
-  // Estados existentes
+  // Control de estados para “seguir” y “reclamar”
   const [isFollowed, setIsFollowed] = useState(false);
   const [isClaimed, setIsClaimed] = useState(false);
 
-  // URLs de Instagram para cada restaurante
-  const restaurantLinks = {
-    rest1: "https://www.instagram.com/restaurante1",
-    rest2: "https://www.instagram.com/restaurante2",
-    rest3: "https://www.instagram.com/restaurante3",
-  };
+  // Datos de los tres restaurantes
+  const restaurants = [
+    { name: "Restaurante 1", link: "https://www.instagram.com/restaurante1" },
+    { name: "Restaurante 2", link: "https://www.instagram.com/restaurante2" },
+    { name: "Restaurante 3", link: "https://www.instagram.com/restaurante3" },
+  ];
 
-  // Función para abrir la cuenta de Instagram según el restaurante elegido
-  const handleInstagramFollow = () => {
-    window.open(restaurantLinks[selectedRestaurant], "_blank");
+  // Maneja la acción de “Seguir en Instagram” para cada restaurante
+  const handleInstagramFollow = (link) => {
+    window.open(link, "_blank"); // Abre el link en una nueva pestaña
     // Simulamos un pequeño retraso antes de marcar como "seguido"
     setTimeout(() => {
       setIsFollowed(true);
     }, 2000);
   };
 
-  // Función para reclamar el chupito
+  // Reclamar chupito
   const handleClaim = () => {
     setIsClaimed(true);
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full space-y-8 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-cream-100 mb-12 animate-fade-in">
-          ¿Quieres ganarte un chupito?
-        </h1>
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 py-12">
+      {/* Sección inicial: mostrar los 3 restaurantes con su QR y botón */}
+      <h1 className="text-4xl md:text-5xl font-bold text-cream-100 mb-12">
+        Selecciona tu restaurante
+      </h1>
 
-        {/* Sección de botones para seleccionar el restaurante */}
-        <div className="flex space-x-2 justify-center mb-6">
-          <button
-            onClick={() => setSelectedRestaurant("rest1")}
-            className={`px-4 py-2 rounded-full font-medium transition-colors duration-300 focus:outline-none 
-              ${
-                selectedRestaurant === "rest1"
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-800 text-white hover:bg-gray-700"
-              }
-            `}
-          >
-            Restaurante 1
-          </button>
-          <button
-            onClick={() => setSelectedRestaurant("rest2")}
-            className={`px-4 py-2 rounded-full font-medium transition-colors duration-300 focus:outline-none 
-              ${
-                selectedRestaurant === "rest2"
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-800 text-white hover:bg-gray-700"
-              }
-            `}
-          >
-            Restaurante 2
-          </button>
-          <button
-            onClick={() => setSelectedRestaurant("rest3")}
-            className={`px-4 py-2 rounded-full font-medium transition-colors duration-300 focus:outline-none 
-              ${
-                selectedRestaurant === "rest3"
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-800 text-white hover:bg-gray-700"
-              }
-            `}
-          >
-            Restaurante 3
-          </button>
-        </div>
-
-        {/* Mostramos el QR del restaurante seleccionado */}
-        <div className="flex justify-center mb-6">
-          <QRCode
-            value={restaurantLinks[selectedRestaurant]}
-            size={200}
-            bgColor="#FFFFFF"
-            fgColor="#000000"
-            className="p-2 bg-white rounded-md shadow-md"
-          />
-        </div>
-
-        {/* Si aún no ha seguido en Instagram */}
-        {!isFollowed && (
-          <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        {restaurants.map((rest) => (
+          <div key={rest.name} className="flex flex-col items-center">
+            <h2 className="text-xl text-white mb-4">{rest.name}</h2>
+            <div className="bg-white p-2 rounded-md">
+              <QRCode value={rest.link} size={150} />
+            </div>
             <button
-              onClick={handleInstagramFollow}
-              className="w-full flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-full text-white bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:opacity-90 transition-opacity duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
-              aria-label="Síguenos en Instagram"
+              onClick={() => handleInstagramFollow(rest.link)}
+              className="mt-4 px-4 py-2 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white rounded-full font-medium hover:opacity-90 transition-opacity"
             >
-              <FaInstagram className="w-6 h-6 mr-2" />
-              Síguenos en Instagram
+              <FaInstagram className="inline-block mr-2" />
+              Seguir en Instagram
             </button>
           </div>
+        ))}
+      </div>
+
+      {/* Sección de “Escanea y Gana” / “¿Quieres ganarte un chupito?” */}
+      <div className="max-w-md w-full space-y-8 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-cream-100 mb-8 animate-fade-in">
+          Escanea y Gana
+        </h2>
+
+        {/* Si todavía no ha seguido ninguna cuenta */}
+        {!isFollowed && (
+          <p className="text-white mb-6">
+            Escanea el QR y síguenos en Instagram para obtener un chupito gratis.
+          </p>
         )}
 
-        {/* Si ya siguió en Instagram pero no ha reclamado el chupito */}
+        {/* Si ya siguió y aún no reclama */}
         {isFollowed && !isClaimed && (
           <div className="space-y-6 animate-fade-in">
             <div className="flex items-center justify-center text-green-400 mb-4">
@@ -117,14 +79,13 @@ const ShotClaimPage = () => {
             <button
               onClick={handleClaim}
               className="w-full px-8 py-4 bg-brown-600 text-cream-100 rounded-full font-medium hover:bg-brown-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brown-500"
-              aria-label="Ganar chupito"
             >
-              Ganar
+              Reclamar
             </button>
           </div>
         )}
 
-        {/* Si ya reclamó el chupito */}
+        {/* Si ya reclamó */}
         {isClaimed && (
           <div className="animate-fade-in">
             <div className="bg-green-900 bg-opacity-50 p-6 rounded-lg">
