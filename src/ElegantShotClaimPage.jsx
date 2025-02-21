@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-// Importa desde qrcode.react el componente que prefieras (Canvas o SVG)
 import { QRCodeCanvas } from "qrcode.react";
 
 const ElegantShotClaimPage = () => {
-  // Estados para seguimiento y reclamo
   const [isFollowed, setIsFollowed] = useState(false);
   const [isClaimed, setIsClaimed] = useState(false);
 
@@ -31,7 +29,6 @@ const ElegantShotClaimPage = () => {
   // Abrir Instagram y marcar como seguido
   const handleInstagramFollow = () => {
     window.open(selectedRestaurant.link, "_blank");
-    // Simulamos un retardo de 2 segundos
     setTimeout(() => {
       setIsFollowed(true);
     }, 2000);
@@ -44,15 +41,32 @@ const ElegantShotClaimPage = () => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center px-6 py-12">
-      {/* Título principal */}
-      <h1 className="text-4xl md:text-5xl font-bold text-yellow-200 font-serif tracking-wider mb-4">
+      {/* TÍTULO (Cambia a blanco si se selecciona “Muy Bendito”) */}
+      <h1
+        className={`text-4xl md:text-5xl font-bold font-serif tracking-wider mb-4 
+        transition-colors duration-700 
+        ${
+          selectedRestaurant.name === "Muy Bendito"
+            ? "text-white"
+            : "text-yellow-200"
+        }`}
+      >
         ¿Quieres ganarte un chupito?
       </h1>
-      <p className="text-gray-300 mb-8 text-lg">
+
+      {/* TEXTO (También cambia a blanco con la misma animación) */}
+      <p
+        className={`mb-8 text-lg transition-colors duration-700 
+        ${
+          selectedRestaurant.name === "Muy Bendito"
+            ? "text-white"
+            : "text-gray-300"
+        }`}
+      >
         Selecciona un restaurante y sigue las instrucciones
       </p>
 
-      {/* Botones para seleccionar restaurante */}
+      {/* BOTONES para seleccionar restaurante */}
       <div className="flex flex-wrap gap-4 justify-center mb-10">
         {restaurants.map((rest) => (
           <button
@@ -76,8 +90,16 @@ const ElegantShotClaimPage = () => {
         ))}
       </div>
 
-      {/* Tarjeta con QR y botones */}
-      <div className="bg-gray-800 border border-yellow-700 rounded-lg p-6 shadow-2xl flex flex-col items-center w-full max-w-sm">
+      {/* TARJETA con QR y botones */}
+      <div
+        className={`bg-gray-800 rounded-lg p-6 shadow-2xl flex flex-col items-center w-full max-w-sm 
+        border transition-colors duration-700 
+        ${
+          selectedRestaurant.name === "Muy Bendito"
+            ? "border-white"
+            : "border-yellow-700"
+        }`}
+      >
         {/* QR del restaurante seleccionado */}
         <QRCodeCanvas
           value={selectedRestaurant.link}
@@ -87,7 +109,7 @@ const ElegantShotClaimPage = () => {
           className="mb-6"
         />
 
-        {/* Botón "Seguir en Instagram" si aún no ha seguido */}
+        {/* BOTÓN "Seguir en Instagram" si aún no ha seguido */}
         {!isFollowed && !isClaimed && (
           <button
             onClick={handleInstagramFollow}
@@ -98,7 +120,7 @@ const ElegantShotClaimPage = () => {
           </button>
         )}
 
-        {/* Mensaje para reclamar si ya siguió */}
+        {/* MENSAJE para reclamar si ya siguió */}
         {isFollowed && !isClaimed && (
           <div className="text-center space-y-4 animate-fade-in">
             <div className="flex items-center justify-center text-green-400">
@@ -116,7 +138,7 @@ const ElegantShotClaimPage = () => {
           </div>
         )}
 
-        {/* Mensaje final si ya reclamó */}
+        {/* MENSAJE final si ya reclamó */}
         {isClaimed && (
           <div className="animate-fade-in text-center mt-4">
             <div className="bg-green-900 bg-opacity-50 p-4 rounded-lg">
