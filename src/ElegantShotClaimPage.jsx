@@ -7,15 +7,15 @@ const ElegantShotClaimPage = () => {
   const [isFollowed, setIsFollowed] = useState(false);
   const [isClaimed, setIsClaimed] = useState(false);
 
-  // Lista de restaurantes
+  // Lista de restaurantes con sus enlaces de Instagram
   const restaurants = [
     {
       name: "Muy Bendito",
       link: "https://www.instagram.com/muybenditomad/",
     },
     {
-      name: "Restaurante 2",
-      link: "https://www.instagram.com/restaurante2",
+      name: "Black Fig Restaurant",
+      link: "https://www.instagram.com/blackfigrestaurant/",
     },
     {
       name: "Restaurante 3",
@@ -26,7 +26,7 @@ const ElegantShotClaimPage = () => {
   // Restaurante seleccionado (por defecto el primero)
   const [selectedRestaurant, setSelectedRestaurant] = useState(restaurants[0]);
 
-  // Abrir Instagram y marcar como seguido
+  // Abrir Instagram y marcar como seguido tras 2s
   const handleInstagramFollow = () => {
     window.open(selectedRestaurant.link, "_blank");
     setTimeout(() => {
@@ -109,7 +109,7 @@ const ElegantShotClaimPage = () => {
           className="mb-6"
         />
 
-        {/* BOTÓN "Seguir en Instagram" si aún no ha seguido */}
+        {/* Botón "Seguir en Instagram" si aún no ha seguido */}
         {!isFollowed && !isClaimed && (
           <button
             onClick={handleInstagramFollow}
