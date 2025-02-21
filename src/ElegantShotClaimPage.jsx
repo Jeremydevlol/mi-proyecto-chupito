@@ -1,33 +1,23 @@
 import React, { useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-// Importamos específicamente el componente que deseamos usar de qrcode.react
 import { QRCodeCanvas } from "qrcode.react";
 
 const ElegantShotClaimPage = () => {
   const [isFollowed, setIsFollowed] = useState(false);
   const [isClaimed, setIsClaimed] = useState(false);
 
-  // Lista de restaurantes (cambia los nombres/links según necesites)
+  // Lista de restaurantes (cambia links y nombres según tu necesidad)
   const restaurants = [
-    {
-      name: "Restaurante 1",
-      link: "https://www.instagram.com/restaurante1",
-    },
-    {
-      name: "Restaurante 2",
-      link: "https://www.instagram.com/restaurante2",
-    },
-    {
-      name: "Restaurante 3",
-      link: "https://www.instagram.com/restaurante3",
-    },
+    { name: "Restaurante 1", link: "https://www.instagram.com/restaurante1" },
+    { name: "Restaurante 2", link: "https://www.instagram.com/restaurante2" },
+    { name: "Restaurante 3", link: "https://www.instagram.com/restaurante3" },
   ];
 
-  // Estado que indica cuál restaurante está seleccionado
+  // Restaurante seleccionado
   const [selectedRestaurant, setSelectedRestaurant] = useState(restaurants[0]);
 
-  // Abre el enlace de Instagram y marca como seguido tras 2 segundos
+  // Abre Instagram y marca como seguido tras 2s
   const handleInstagramFollow = () => {
     window.open(selectedRestaurant.link, "_blank");
     setTimeout(() => {
@@ -35,13 +25,13 @@ const ElegantShotClaimPage = () => {
     }, 2000);
   };
 
-  // Reclama el chupito
+  // Reclamar chupito
   const handleClaim = () => {
     setIsClaimed(true);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-6 py-12">
       {/* Título principal */}
       <h1 className="text-4xl md:text-5xl font-bold text-yellow-200 font-serif tracking-wider mb-4">
         ¿Quieres ganarte un chupito?
@@ -56,7 +46,7 @@ const ElegantShotClaimPage = () => {
           <button
             key={rest.name}
             onClick={() => {
-              // Cambiamos restaurante y reiniciamos estados
+              // Cambia restaurante y reinicia estados
               setSelectedRestaurant(rest);
               setIsFollowed(false);
               setIsClaimed(false);
@@ -65,7 +55,7 @@ const ElegantShotClaimPage = () => {
               ${
                 rest.name === selectedRestaurant.name
                   ? "bg-yellow-500 text-black"
-                  : "bg-gray-800 text-gray-100 hover:bg-yellow-600 hover:text-black"
+                  : "bg-gray-700 text-white hover:bg-yellow-500 hover:text-black"
               }
             `}
           >
@@ -74,8 +64,8 @@ const ElegantShotClaimPage = () => {
         ))}
       </div>
 
-      {/* Contenedor para QR y botones */}
-      <div className="bg-gray-800 rounded-lg p-6 shadow-2xl flex flex-col items-center w-full max-w-sm">
+      {/* Tarjeta con QR y botones */}
+      <div className="bg-gray-800 border border-yellow-700 rounded-lg p-6 shadow-2xl flex flex-col items-center w-full max-w-sm">
         {/* QR del restaurante seleccionado */}
         <QRCodeCanvas
           value={selectedRestaurant.link}
@@ -89,7 +79,7 @@ const ElegantShotClaimPage = () => {
         {!isFollowed && !isClaimed && (
           <button
             onClick={handleInstagramFollow}
-            className="mb-6 px-6 py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white rounded-full font-medium hover:opacity-90 transition-opacity"
+            className="mb-6 px-6 py-3 bg-gradient-to-r from-yellow-600 to-yellow-400 text-black rounded-full font-medium hover:opacity-90 transition-opacity"
           >
             <FaInstagram className="inline-block mr-2" />
             Seguir en Instagram
