@@ -18,18 +18,18 @@ const ElegantShotClaimPage = () => {
       link: "https://www.instagram.com/blackfigrestaurant/",
     },
     {
-      name: "Restaurante 3",
-      link: "https://www.instagram.com/restaurante3",
+      name: "THO CLUB",
+      link: "https://www.instagram.com/thoclub/",
     },
   ];
 
   // Restaurante seleccionado (por defecto el primero)
   const [selectedRestaurant, setSelectedRestaurant] = useState(restaurants[0]);
 
-  // Verifica si el restaurante seleccionado es "Muy Bendito"
+  // ¿Está seleccionado "Muy Bendito"?
   const isMuyBenditoSelected = selectedRestaurant.name === "Muy Bendito";
 
-  // Abrir Instagram y marcar como seguido tras 2s
+  // Maneja la acción de seguir en Instagram
   const handleInstagramFollow = () => {
     window.open(selectedRestaurant.link, "_blank");
     setTimeout(() => {
@@ -43,11 +43,6 @@ const ElegantShotClaimPage = () => {
   };
 
   return (
-    {/* 
-      Contenedor principal:
-      - Si es "Muy Bendito": fondo blanco, texto negro, tipografía serif
-      - Si NO es "Muy Bendito": fondo negro, texto blanco, tipografía sans 
-    */}
     <div
       className={`min-h-screen px-6 py-12 transition-colors duration-700 
         ${
@@ -57,7 +52,7 @@ const ElegantShotClaimPage = () => {
         }
       flex flex-col items-center justify-center`}
     >
-      {/* Título */}
+      {/* Título principal */}
       <h1
         className={`text-4xl md:text-5xl font-bold tracking-wider mb-4 transition-colors duration-700
           ${
@@ -83,12 +78,10 @@ const ElegantShotClaimPage = () => {
         Selecciona un restaurante y sigue las instrucciones
       </p>
 
-      {/* BOTONES para seleccionar restaurante */}
+      {/* Botones para seleccionar restaurante */}
       <div className="flex flex-wrap gap-4 justify-center mb-10">
         {restaurants.map((rest) => {
-          // ¿Este botón corresponde al restaurante actualmente seleccionado?
           const isSelected = rest.name === selectedRestaurant.name;
-
           return (
             <button
               key={rest.name}
@@ -100,19 +93,20 @@ const ElegantShotClaimPage = () => {
               className={`
                 px-5 py-2 rounded-full font-medium tracking-wide transition-colors duration-300
                 ${
-                  // Si se ha seleccionado "Muy Bendito" en general:
+                  // Si en general está seleccionado "Muy Bendito"
                   isMuyBenditoSelected
-                    ? isSelected
-                      // Botón seleccionado: negro con texto blanco
-                      ? "bg-black text-white"
-                      // Botón no seleccionado: blanco con texto negro
-                      : "bg-white text-black hover:bg-gray-200"
-                    : // Caso contrario (no es "Muy Bendito")
+                    ? // Modo "Muy Bendito" (blanco)
+                      isSelected
+                        ? // Botón seleccionado: negro con texto blanco
+                          "bg-black text-white"
+                        : // Botón no seleccionado: blanco con texto negro
+                          "bg-white text-black hover:bg-gray-200"
+                    : // Modo oscuro (restaurantes 2 y 3)
                     isSelected
-                    // Botón seleccionado: amarillo con texto negro
-                      ? "bg-yellow-500 text-black"
-                      // Botón no seleccionado: gris con texto blanco
-                      : "bg-gray-700 text-white hover:bg-yellow-500 hover:text-black"
+                      ? // Botón seleccionado: amarillo con texto negro
+                        "bg-yellow-500 text-black"
+                      : // Botón no seleccionado: gris con texto blanco
+                        "bg-gray-700 text-white hover:bg-yellow-500 hover:text-black"
                 }
               `}
             >
@@ -122,14 +116,12 @@ const ElegantShotClaimPage = () => {
         })}
       </div>
 
-      {/* TARJETA que contiene QR y botones de seguir/reclamar */}
+      {/* Tarjeta con QR y botones */}
       <div
         className={`rounded-lg p-6 shadow-2xl flex flex-col items-center w-full max-w-sm border transition-colors duration-700
           ${
-            // Si es "Muy Bendito", fondo gris claro y borde negro
             isMuyBenditoSelected
               ? "bg-gray-100 border-black"
-              // Si NO, fondo gris oscuro y borde amarillo
               : "bg-gray-800 border-yellow-700"
           }
         `}
@@ -150,12 +142,9 @@ const ElegantShotClaimPage = () => {
             className={`
               mb-6 px-6 py-3 rounded-full font-medium transition-opacity
               ${
-                // Si es "Muy Bendito"
                 isMuyBenditoSelected
-                  ? // Botón dorado con texto negro
-                    "bg-gradient-to-r from-yellow-400 to-yellow-200 text-black hover:opacity-90"
-                  : // Caso normal
-                    "bg-gradient-to-r from-yellow-600 to-yellow-400 text-black hover:opacity-90"
+                  ? "bg-gradient-to-r from-yellow-400 to-yellow-200 text-black hover:opacity-90"
+                  : "bg-gradient-to-r from-yellow-600 to-yellow-400 text-black hover:opacity-90"
               }
             `}
           >
