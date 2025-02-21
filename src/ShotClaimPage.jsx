@@ -4,21 +4,20 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import QRCode from "qrcode.react";
 
 const ShotClaimPage = () => {
-  // Control de estados para “seguir” y “reclamar”
+  // Control de estados para seguir y reclamar
   const [isFollowed, setIsFollowed] = useState(false);
   const [isClaimed, setIsClaimed] = useState(false);
 
-  // Datos de los tres restaurantes
+  // Datos de los restaurantes (puedes cambiar los nombres y links)
   const restaurants = [
     { name: "Restaurante 1", link: "https://www.instagram.com/restaurante1" },
     { name: "Restaurante 2", link: "https://www.instagram.com/restaurante2" },
     { name: "Restaurante 3", link: "https://www.instagram.com/restaurante3" },
   ];
 
-  // Maneja la acción de “Seguir en Instagram” para cada restaurante
+  // Abre el link de Instagram y marca como seguido tras 2 segundos
   const handleInstagramFollow = (link) => {
-    window.open(link, "_blank"); // Abre el link en una nueva pestaña
-    // Simulamos un pequeño retraso antes de marcar como "seguido"
+    window.open(link, "_blank");
     setTimeout(() => {
       setIsFollowed(true);
     }, 2000);
@@ -31,10 +30,13 @@ const ShotClaimPage = () => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 py-12">
-      {/* Sección inicial: mostrar los 3 restaurantes con su QR y botón */}
-      <h1 className="text-4xl md:text-5xl font-bold text-cream-100 mb-12">
-        Selecciona tu restaurante
+      {/* Sección inicial: 3 botones/QR de restaurantes */}
+      <h1 className="text-4xl md:text-5xl font-bold text-cream-100 mb-8 animate-fade-in">
+        ¿Quieres ganarte un chupito?
       </h1>
+      <p className="text-white mb-8">
+        Selecciona uno de los restaurantes y síguelo en Instagram.
+      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         {restaurants.map((rest) => (
@@ -54,20 +56,16 @@ const ShotClaimPage = () => {
         ))}
       </div>
 
-      {/* Sección de “Escanea y Gana” / “¿Quieres ganarte un chupito?” */}
+      {/* Sección de lógica para reclamar el chupito */}
       <div className="max-w-md w-full space-y-8 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-cream-100 mb-8 animate-fade-in">
-          Escanea y Gana
-        </h2>
-
-        {/* Si todavía no ha seguido ninguna cuenta */}
+        {/* 1. Antes de seguir en Instagram */}
         {!isFollowed && (
           <p className="text-white mb-6">
             Escanea el QR y síguenos en Instagram para obtener un chupito gratis.
           </p>
         )}
 
-        {/* Si ya siguió y aún no reclama */}
+        {/* 2. Ya siguió, pero no reclamó */}
         {isFollowed && !isClaimed && (
           <div className="space-y-6 animate-fade-in">
             <div className="flex items-center justify-center text-green-400 mb-4">
@@ -80,12 +78,12 @@ const ShotClaimPage = () => {
               onClick={handleClaim}
               className="w-full px-8 py-4 bg-brown-600 text-cream-100 rounded-full font-medium hover:bg-brown-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brown-500"
             >
-              Reclamar
+              Ganar
             </button>
           </div>
         )}
 
-        {/* Si ya reclamó */}
+        {/* 3. Ya reclamó */}
         {isClaimed && (
           <div className="animate-fade-in">
             <div className="bg-green-900 bg-opacity-50 p-6 rounded-lg">
