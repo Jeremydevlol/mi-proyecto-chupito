@@ -1,25 +1,37 @@
 import React, { useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+// Importa desde qrcode.react el componente que prefieras (Canvas o SVG)
 import { QRCodeCanvas } from "qrcode.react";
 
 const ElegantShotClaimPage = () => {
+  // Estados para seguimiento y reclamo
   const [isFollowed, setIsFollowed] = useState(false);
   const [isClaimed, setIsClaimed] = useState(false);
 
-  // Lista de restaurantes (cambia links y nombres según tu necesidad)
+  // Lista de restaurantes
   const restaurants = [
-    { name: "Restaurante 1", link: "https://www.instagram.com/restaurante1" },
-    { name: "Restaurante 2", link: "https://www.instagram.com/restaurante2" },
-    { name: "Restaurante 3", link: "https://www.instagram.com/restaurante3" },
+    {
+      name: "Muy Bendito",
+      link: "https://www.instagram.com/muybenditomad/",
+    },
+    {
+      name: "Restaurante 2",
+      link: "https://www.instagram.com/restaurante2",
+    },
+    {
+      name: "Restaurante 3",
+      link: "https://www.instagram.com/restaurante3",
+    },
   ];
 
-  // Restaurante seleccionado
+  // Restaurante seleccionado (por defecto el primero)
   const [selectedRestaurant, setSelectedRestaurant] = useState(restaurants[0]);
 
-  // Abre Instagram y marca como seguido tras 2s
+  // Abrir Instagram y marcar como seguido
   const handleInstagramFollow = () => {
     window.open(selectedRestaurant.link, "_blank");
+    // Simulamos un retardo de 2 segundos
     setTimeout(() => {
       setIsFollowed(true);
     }, 2000);
@@ -46,7 +58,7 @@ const ElegantShotClaimPage = () => {
           <button
             key={rest.name}
             onClick={() => {
-              // Cambia restaurante y reinicia estados
+              // Al cambiar de restaurante, reiniciamos estados
               setSelectedRestaurant(rest);
               setIsFollowed(false);
               setIsClaimed(false);
