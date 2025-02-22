@@ -3,33 +3,11 @@ import { FaInstagram } from "react-icons/fa";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { QRCodeCanvas } from "qrcode.react";
 
-// Definimos los estilos para cada restaurante
-const restaurantStyles = {
-  "Muy Bendito": {
-    // Botón de selección (cuando está seleccionado)
-    selected: "bg-yellow-500 text-black",
-    // Botón de selección (cuando NO está seleccionado)
-    unselected: "bg-gray-700 text-white hover:bg-yellow-500 hover:text-black",
-    // Botón "Seguir en Instagram"
-    instagramBtn: "bg-gradient-to-r from-purple-500 to-pink-500 text-white",
-  },
-  "Black Fig Restaurant": {
-    selected: "bg-green-500 text-white",
-    unselected: "bg-gray-700 text-white hover:bg-green-500 hover:text-white",
-    instagramBtn: "bg-gradient-to-r from-green-600 to-green-400 text-white",
-  },
-  "THO CLUB": {
-    selected: "bg-purple-500 text-white",
-    unselected: "bg-gray-700 text-white hover:bg-purple-500 hover:text-white",
-    instagramBtn: "bg-gradient-to-r from-purple-600 to-indigo-400 text-white",
-  },
-};
-
 const ElegantShotClaimPage = () => {
   const [isFollowed, setIsFollowed] = useState(false);
   const [isClaimed, setIsClaimed] = useState(false);
 
-  // Lista de restaurantes
+  // Lista de restaurantes (puedes cambiar los nombres/links)
   const restaurants = [
     {
       name: "Muy Bendito",
@@ -45,7 +23,7 @@ const ElegantShotClaimPage = () => {
     },
   ];
 
-  // Restaurante seleccionado (por defecto el primero)
+  // Restaurante seleccionado
   const [selectedRestaurant, setSelectedRestaurant] = useState(restaurants[0]);
 
   // Seguir en Instagram
@@ -61,9 +39,14 @@ const ElegantShotClaimPage = () => {
     setIsClaimed(true);
   };
 
+  // Clases de color para los botones (todas iguales)
+  const buttonSelectedClass = "bg-purple-500 text-white";
+  const buttonUnselectedClass = "bg-gray-700 text-white hover:bg-purple-500 hover:text-white";
+  const instagramBtnClass = "bg-gradient-to-r from-purple-600 to-purple-400 text-white";
+
   return (
     <div className="min-h-screen bg-black text-white font-serif flex flex-col items-center justify-center px-6 py-12">
-      {/* Título y subtítulo con la misma tipografía */}
+      {/* Título y subtítulo */}
       <h1 className="text-4xl md:text-5xl font-bold tracking-wider mb-4">
         ¿Quieres ganarte un chupito?
       </h1>
@@ -75,7 +58,6 @@ const ElegantShotClaimPage = () => {
       <div className="flex flex-wrap gap-4 justify-center mb-10">
         {restaurants.map((rest) => {
           const isSelected = rest.name === selectedRestaurant.name;
-          const style = restaurantStyles[rest.name];
           return (
             <button
               key={rest.name}
@@ -86,7 +68,7 @@ const ElegantShotClaimPage = () => {
                 setIsClaimed(false);
               }}
               className={`px-5 py-2 rounded-full font-medium tracking-wide transition-colors duration-300
-                ${isSelected ? style.selected : style.unselected}
+                ${isSelected ? buttonSelectedClass : buttonUnselectedClass}
               `}
             >
               {rest.name}
@@ -95,7 +77,7 @@ const ElegantShotClaimPage = () => {
         })}
       </div>
 
-      {/* Contenedor "tarjeta" con QR y botones; animación de fade-in al cambiar */}
+      {/* Contenedor con QR y botones */}
       <div
         key={selectedRestaurant.name}
         className="bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-2xl flex flex-col items-center w-full max-w-sm animate-fadeIn"
@@ -119,9 +101,7 @@ const ElegantShotClaimPage = () => {
         {!isFollowed && !isClaimed && (
           <button
             onClick={handleInstagramFollow}
-            className={`mb-6 px-6 py-3 rounded-full font-medium transition-colors hover:opacity-90
-              ${restaurantStyles[selectedRestaurant.name].instagramBtn}
-            `}
+            className={`mb-6 px-6 py-3 rounded-full font-medium transition-colors hover:opacity-90 ${instagramBtnClass}`}
           >
             <FaInstagram className="inline-block mr-2" />
             Seguir en Instagram
