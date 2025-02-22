@@ -7,7 +7,7 @@ const ElegantShotClaimPage = () => {
   const [isFollowed, setIsFollowed] = useState(false);
   const [isClaimed, setIsClaimed] = useState(false);
 
-  // Lista de restaurantes (puedes cambiar los nombres/links)
+  // Lista de restaurantes
   const restaurants = [
     {
       name: "Muy Bendito",
@@ -23,10 +23,10 @@ const ElegantShotClaimPage = () => {
     },
   ];
 
-  // Restaurante seleccionado
+  // Restaurante seleccionado (por defecto, el primero)
   const [selectedRestaurant, setSelectedRestaurant] = useState(restaurants[0]);
 
-  // Seguir en Instagram
+  // Manejo de "Seguir en Instagram"
   const handleInstagramFollow = () => {
     window.open(selectedRestaurant.link, "_blank");
     setTimeout(() => {
@@ -39,10 +39,13 @@ const ElegantShotClaimPage = () => {
     setIsClaimed(true);
   };
 
-  // Clases de color para los botones (todas iguales)
-  const buttonSelectedClass = "bg-purple-500 text-white";
-  const buttonUnselectedClass = "bg-gray-700 text-white hover:bg-purple-500 hover:text-white";
-  const instagramBtnClass = "bg-gradient-to-r from-purple-600 to-purple-400 text-white";
+  // Clases de color unificadas (usa teal en lugar de púrpura)
+  const buttonSelectedClass =
+    "bg-teal-500 text-white"; 
+  const buttonUnselectedClass =
+    "bg-gray-700 text-white hover:bg-teal-500 hover:text-white";
+  const instagramBtnClass =
+    "bg-gradient-to-r from-teal-600 to-teal-400 text-white";
 
   return (
     <div className="min-h-screen bg-black text-white font-serif flex flex-col items-center justify-center px-6 py-12">
@@ -82,8 +85,8 @@ const ElegantShotClaimPage = () => {
         key={selectedRestaurant.name}
         className="bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-2xl flex flex-col items-center w-full max-w-sm animate-fadeIn"
       >
-        {/* Marco degradado y fondo para el QR */}
-        <div className="relative p-1 mb-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg">
+        {/* Marco degradado y fondo para el QR (puedes cambiar el degradado si deseas) */}
+        <div className="relative p-1 mb-6 bg-gradient-to-r from-teal-500 via-green-400 to-teal-500 rounded-lg">
           <div className="bg-gray-900 p-4 rounded-lg">
             <QRCodeCanvas
               value={selectedRestaurant.link}
