@@ -23,7 +23,7 @@ const ElegantShotClaimPage = () => {
     },
   ];
 
-  // Restaurante seleccionado (por defecto, el primero)
+  // Restaurante seleccionado
   const [selectedRestaurant, setSelectedRestaurant] = useState(restaurants[0]);
 
   // Manejo de "Seguir en Instagram"
@@ -39,13 +39,13 @@ const ElegantShotClaimPage = () => {
     setIsClaimed(true);
   };
 
-  // Clases de color unificadas (usa teal en lugar de púrpura)
-  const buttonSelectedClass =
-    "bg-teal-500 text-white"; 
+  // Colores unificados para botones de restaurantes
+  const buttonSelectedClass = "bg-teal-500 text-white";
   const buttonUnselectedClass =
     "bg-gray-700 text-white hover:bg-teal-500 hover:text-white";
-  const instagramBtnClass =
-    "bg-gradient-to-r from-teal-600 to-teal-400 text-white";
+
+  // **Botón “Seguir en Instagram” en blanco**
+  const instagramBtnClass = "bg-white text-black hover:bg-gray-200";
 
   return (
     <div className="min-h-screen bg-black text-white font-serif flex flex-col items-center justify-center px-6 py-12">
@@ -65,7 +65,6 @@ const ElegantShotClaimPage = () => {
             <button
               key={rest.name}
               onClick={() => {
-                // Cambiamos restaurante y reiniciamos estados
                 setSelectedRestaurant(rest);
                 setIsFollowed(false);
                 setIsClaimed(false);
@@ -85,7 +84,7 @@ const ElegantShotClaimPage = () => {
         key={selectedRestaurant.name}
         className="bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-2xl flex flex-col items-center w-full max-w-sm animate-fadeIn"
       >
-        {/* Marco degradado y fondo para el QR (puedes cambiar el degradado si deseas) */}
+        {/* Marco degradado y fondo para el QR */}
         <div className="relative p-1 mb-6 bg-gradient-to-r from-teal-500 via-green-400 to-teal-500 rounded-lg">
           <div className="bg-gray-900 p-4 rounded-lg">
             <QRCodeCanvas
@@ -100,11 +99,11 @@ const ElegantShotClaimPage = () => {
           </div>
         </div>
 
-        {/* Botón "Seguir en Instagram" si aún no ha seguido */}
+        {/* Botón "Seguir en Instagram" en blanco */}
         {!isFollowed && !isClaimed && (
           <button
             onClick={handleInstagramFollow}
-            className={`mb-6 px-6 py-3 rounded-full font-medium transition-colors hover:opacity-90 ${instagramBtnClass}`}
+            className={`mb-6 px-6 py-3 rounded-full font-medium transition-colors ${instagramBtnClass}`}
           >
             <FaInstagram className="inline-block mr-2" />
             Seguir en Instagram
