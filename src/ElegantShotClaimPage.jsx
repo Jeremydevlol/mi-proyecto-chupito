@@ -39,13 +39,15 @@ const ElegantShotClaimPage = () => {
     setIsClaimed(true);
   };
 
-  // Colores unificados para botones de restaurantes
-  const buttonSelectedClass = "bg-teal-500 text-white";
+  // Clases para los botones en color blanco
+  // Al estar seleccionado, mostramos un "anillo" (ring) de color teal
+  const buttonSelectedClass =
+    "bg-white text-black rounded-full px-5 py-2 font-medium ring-2 ring-offset-2 ring-teal-500 transition duration-200";
   const buttonUnselectedClass =
-    "bg-gray-700 text-white hover:bg-teal-500 hover:text-white";
+    "bg-white text-black rounded-full px-5 py-2 font-medium hover:ring-2 hover:ring-offset-2 hover:ring-teal-500 transition duration-200";
 
-  // **Botón “Seguir en Instagram” en blanco**
-  const instagramBtnClass = "bg-white text-black hover:bg-gray-200";
+  // Botón "Seguir en Instagram" (también blanco, si quieres)
+  const instagramBtnClass = "bg-white text-black hover:bg-gray-200 rounded-full px-6 py-3 font-medium transition-colors";
 
   return (
     <div className="min-h-screen bg-black text-white font-serif flex flex-col items-center justify-center px-6 py-12">
@@ -57,7 +59,7 @@ const ElegantShotClaimPage = () => {
         Selecciona un restaurante y sigue las instrucciones
       </p>
 
-      {/* Botones para seleccionar restaurante */}
+      {/* Botones para seleccionar restaurante (todos blancos) */}
       <div className="flex flex-wrap gap-4 justify-center mb-10">
         {restaurants.map((rest) => {
           const isSelected = rest.name === selectedRestaurant.name;
@@ -69,9 +71,7 @@ const ElegantShotClaimPage = () => {
                 setIsFollowed(false);
                 setIsClaimed(false);
               }}
-              className={`px-5 py-2 rounded-full font-medium tracking-wide transition-colors duration-300
-                ${isSelected ? buttonSelectedClass : buttonUnselectedClass}
-              `}
+              className={isSelected ? buttonSelectedClass : buttonUnselectedClass}
             >
               {rest.name}
             </button>
@@ -99,12 +99,9 @@ const ElegantShotClaimPage = () => {
           </div>
         </div>
 
-        {/* Botón "Seguir en Instagram" en blanco */}
+        {/* Botón "Seguir en Instagram" (blanco con texto negro) */}
         {!isFollowed && !isClaimed && (
-          <button
-            onClick={handleInstagramFollow}
-            className={`mb-6 px-6 py-3 rounded-full font-medium transition-colors ${instagramBtnClass}`}
-          >
+          <button onClick={handleInstagramFollow} className={`mb-6 ${instagramBtnClass}`}>
             <FaInstagram className="inline-block mr-2" />
             Seguir en Instagram
           </button>
