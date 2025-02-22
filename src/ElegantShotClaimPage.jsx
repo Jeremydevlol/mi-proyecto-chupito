@@ -25,11 +25,9 @@ const ElegantShotClaimPage = () => {
 
   // Restaurante seleccionado
   const [selectedRestaurant, setSelectedRestaurant] = useState(restaurants[0]);
-
-  // Verificamos si está seleccionado "Muy Bendito"
   const isMuyBenditoSelected = selectedRestaurant.name === "Muy Bendito";
 
-  // Acción para seguir en Instagram
+  // Manejo de seguir en Instagram
   const handleInstagramFollow = () => {
     window.open(selectedRestaurant.link, "_blank");
     setTimeout(() => {
@@ -37,17 +35,14 @@ const ElegantShotClaimPage = () => {
     }, 2000);
   };
 
-  // Acción para reclamar el chupito
+  // Reclamar chupito
   const handleClaim = () => {
     setIsClaimed(true);
   };
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6 py-12">
-      {/* 
-        Título y subtítulo 
-        - Si es "Muy Bendito", usamos font-serif; si no, font-sans 
-      */}
+      {/* Título y subtítulo */}
       <h1
         className={`text-4xl md:text-5xl font-bold tracking-wider mb-4 transition-colors duration-700 
           ${isMuyBenditoSelected ? "font-serif" : "font-sans"}
@@ -78,12 +73,9 @@ const ElegantShotClaimPage = () => {
               className={`
                 px-5 py-2 rounded-full font-medium tracking-wide transition-colors duration-300
                 ${
-                  // Botón SELECCIONADO
                   isSelected
-                    ? // Amarillo con texto negro
-                      "bg-yellow-500 text-black"
-                    : // Gris oscuro con texto blanco (hover amarillo)
-                      "bg-gray-700 text-white hover:bg-yellow-500 hover:text-black"
+                    ? "bg-yellow-500 text-black"
+                    : "bg-gray-700 text-white hover:bg-yellow-500 hover:text-black"
                 }
               `}
             >
@@ -95,14 +87,25 @@ const ElegantShotClaimPage = () => {
 
       {/* Tarjeta con QR y botones */}
       <div className="bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-2xl flex flex-col items-center w-full max-w-sm">
-        {/* QR del restaurante seleccionado */}
-        <QRCodeCanvas
-          value={selectedRestaurant.link}
-          size={200}
-          bgColor="#ffffff"
-          fgColor="#000000"
-          className="mb-6"
-        />
+        {/* 
+          Contenedor con gradiente alrededor del QR.
+          1) Div externo con `bg-gradient-to-r` para el borde degradado.
+          2) Div interno con `bg-gray-900` para el fondo detrás del QR.
+        */}
+        <div className="relative p-1 mb-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg">
+          <div className="bg-gray-900 p-4 rounded-lg">
+            <QRCodeCanvas
+              value={selectedRestaurant.link}
+              size={200}
+              bgColor="#ffffff"
+              fgColor="#000000"
+              includeMargin={true}
+              className="rounded-lg shadow-lg"
+              // Puedes ajustar 'level' para controlar la tolerancia de error: L, M, Q, H
+              level="H"
+            />
+          </div>
+        </div>
 
         {/* Botón "Seguir en Instagram" si aún no ha seguido */}
         {!isFollowed && !isClaimed && (
@@ -111,7 +114,6 @@ const ElegantShotClaimPage = () => {
             className={`
               mb-6 px-6 py-3 rounded-full font-medium transition-colors
               ${
-                // Si está seleccionado "Muy Bendito", cambia el color del botón
                 isMuyBenditoSelected
                   ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:opacity-90"
                   : "bg-gradient-to-r from-yellow-600 to-yellow-400 text-black hover:opacity-90"
